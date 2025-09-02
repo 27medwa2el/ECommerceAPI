@@ -1,0 +1,162 @@
+{
+  "Customer Management API Samples": {
+    "1. Create Customer": {
+      "method": "POST",
+      "url": "/api/customers",
+      "body": {
+        "name": "John Doe",
+        "email": "john.doe@email.com",
+        "phone": "+1234567890"
+      }
+    },
+    "2. Create Another Customer": {
+      "method": "POST", 
+      "url": "/api/customers",
+      "body": {
+        "name": "Jane Smith",
+        "email": "jane.smith@email.com",
+        "phone": "+0987654321"
+      }
+    },
+    "3. Get All Customers": {
+      "method": "GET",
+      "url": "/api/customers"
+    },
+    "4. Get Customer by ID": {
+      "method": "GET",
+      "url": "/api/customers/1"
+    },
+    "5. Create Customer with Invalid Email": {
+      "method": "POST",
+      "url": "/api/customers",
+      "body": {
+        "name": "Invalid User",
+        "email": "invalid-email",
+        "phone": "123456789"
+      },
+      "expected": "400 Bad Request - Invalid email format"
+    },
+    "6. Create Customer without Required Fields": {
+      "method": "POST",
+      "url": "/api/customers", 
+      "body": {
+        "phone": "123456789"
+      },
+      "expected": "400 Bad Request - Name and email are required"
+    }
+  },
+  
+  "Order Management API Samples": {
+    "1. Create Order": {
+      "method": "POST",
+      "url": "/api/orders",
+      "body": {
+        "customerId": 1,
+        "products": [
+          {
+            "productId": 1,
+            "quantity": 2
+          },
+          {
+            "productId": 3,
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    "2. Create Another Order": {
+      "method": "POST",
+      "url": "/api/orders",
+      "body": {
+        "customerId": 2,
+        "products": [
+          {
+            "productId": 2,
+            "quantity": 1
+          },
+          {
+            "productId": 4,
+            "quantity": 3
+          }
+        ]
+      }
+    },
+    "3. Get Order by ID": {
+      "method": "GET",
+      "url": "/api/orders/1"
+    },
+    "4. Update Order Status to Delivered": {
+      "method": "POST",
+      "url": "/api/orders/UpdateOrderStatus/1",
+      "body": {
+        "status": "Delivered"
+      }
+    },
+    "5. Create Order with Invalid Customer": {
+      "method": "POST",
+      "url": "/api/orders",
+      "body": {
+        "customerId": 999,
+        "products": [
+          {
+            "productId": 1,
+            "quantity": 1
+          }
+        ]
+      },
+      "expected": "400 Bad Request - Customer not found"
+    },
+    "6. Create Order with Invalid Product": {
+      "method": "POST",
+      "url": "/api/orders",
+      "body": {
+        "customerId": 1,
+        "products": [
+          {
+            "productId": 999,
+            "quantity": 1
+          }
+        ]
+      },
+      "expected": "400 Bad Request - Product not found"
+    },
+    "7. Create Order without Products": {
+      "method": "POST",
+      "url": "/api/orders",
+      "body": {
+        "customerId": 1,
+        "products": []
+      },
+      "expected": "400 Bad Request - Order must contain at least one product"
+    },
+    "8. Update Order Status with Invalid Status": {
+      "method": "POST",
+      "url": "/api/orders/UpdateOrderStatus/1",
+      "body": {
+        "status": "InvalidStatus"
+      },
+      "expected": "400 Bad Request - Status must be either Pending or Delivered"
+    }
+  },
+
+  "Test Sequence Recommendations": [
+    "1. First create customers using the customer creation endpoints",
+    "2. Verify customers are created by fetching all customers",
+    "3. Create orders for the customers using valid product IDs (1-8 are seeded)",
+    "4. Fetch order details to verify creation",
+    "5. Update order status to 'Delivered' to test stock reduction",
+    "6. Test error scenarios with invalid data",
+    "7. Verify proper HTTP status codes are returned"
+  ],
+
+  "Available Products (our seeded data )": [
+    "ID 1: Laptop Dell XPS 13 - $1299.99 (Stock: 25)",
+    "ID 2: iPhone 14 Pro - $999.99 (Stock: 50)", 
+    "ID 3: Samsung 4K Monitor - $349.99 (Stock: 15)",
+    "ID 4: Wireless Bluetooth Headphones - $199.99 (Stock: 40)",
+    "ID 5: Gaming Mechanical Keyboard - $89.99 (Stock: 30)",
+    "ID 6: Ergonomic Office Chair - $299.99 (Stock: 20)",
+    "ID 7: Portable SSD 1TB - $149.99 (Stock: 35)",
+    "ID 8: Webcam HD 1080p - $79.99 (Stock: 60)"
+  ]
+}
